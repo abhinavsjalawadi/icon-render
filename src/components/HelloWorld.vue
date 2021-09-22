@@ -1,58 +1,93 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  
+  <div>
+    <li v-for="(path, key)  in iconMap" :key="key">
+
+      {{key}}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        :viewBox="viewBox"
+        :aria-labelledby="icon"
+        :height="height"
+        :width="width"
+        role="presentation"
+        class="vp-icon--svg"
+        @click="$emit('click', $event)"
+      >
+        <g
+          v-html="iconMap[key].path || path"
+        />
+      </svg>
+      
+    </li>
   </div>
+
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+  import { icons } from '../assets/icons.js';
+  export default {
+    data: () => ({
+      iconMap: icons,
+      // styleObject: {
+      //   display: 'flex',
+      //   flexDirection: 'column'
+      // }
+    }),
+    name: 'HelloWorld',
+    props: {
+      icon: {
+        type: String,
+        default: 'bell'
+      },
+      size: {
+        type: [Number, String],
+        default: 14
+      },
+      iconColor: {
+        type: String,
+        default: 'currentColor'
+      },
+      flag: {
+        type: Boolean,
+        default: false
+      }
+    },
+    mounted() {
+    },
+    computed: {
+      viewBox() {
+        // const { icon, iconMap, size } = this;
+        // if (iconMap[icon] && iconMap[icon].viewBox) {
+        //           console.log(iconMap)
+
+        //   return iconMap[icon].viewBox;
+        // }
+        return `0 0 ${40} ${40}`;
+        // return 0
+      },
+      height() {
+        // const { icon, iconMap, size } = this;
+        // if (iconMap[icon] && iconMap[icon].viewBox) {
+        //   return iconMap[icon].height;
+        // }
+        return "500px";
+      },
+      width() {
+        // const { icon, iconMap, size } = this;
+        // if (iconMap[icon] && iconMap[icon].viewBox) {
+        //   return iconMap[icon].width;
+        // }
+        return "500px";
+      }
+    }
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="scss" scoped>
+  .vp-icon--svg {
+    height: 8em;
+    vertical-align: middle;
+  }
 </style>
